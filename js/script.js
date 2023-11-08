@@ -90,7 +90,4 @@ const titleClickHandler = function (event) {
       link.addEventListener('click', titleClickHandler);
     }
   }
-  generateTitleLinks();
-
-
-
+  generateTitleLinks();       
