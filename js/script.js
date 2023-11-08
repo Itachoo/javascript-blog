@@ -81,10 +81,10 @@ const titleClickHandler = function (event) {
       console.log(linkHTML);
 
       /* insert link into titleList */
-    
-        console.log(html);
+      titleList.innerHTML = titleList.innerHTML + linkHTML;
+      console.log(linkHTML);
     }
- html = html + linkHTML;
+    html = html + linkHTML;
 
   }
 
