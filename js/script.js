@@ -48,10 +48,11 @@ const titleClickHandler = function (event) {
 
     targetArticle.classList.add('active');
   }
-}
+};
 const optArticleSelector = '.post',
   optTitleSelector = '.post-title',
-  optTitleListSelector = '.titles';
+  optTitleListSelector = '.titles',
+  optArticleTagsSelector = '.post-tags .list';
 
 function generateTitleLinks() {
 
@@ -67,7 +68,7 @@ function generateTitleLinks() {
     article.querySelector(optArticleSelector); //tego nie miałam//
 
     /* [DONE] get the article id */
-    const articleId = article.getAttribute("Id");
+    const articleId = article.getAttribute('Id');
 
     /* [DONE] find the title element */
     const articleTitle = article.querySelector(optTitleSelector).innerHTML;
@@ -89,5 +90,8 @@ function generateTitleLinks() {
   for (let link of links) {
     link.addEventListener('click', titleClickHandler);
   }
+
 }
+
 generateTitleLinks();
+
