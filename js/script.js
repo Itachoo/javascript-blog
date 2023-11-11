@@ -52,7 +52,8 @@ const titleClickHandler = function (event) {
 const optArticleSelector = '.post',
   optTitleSelector = '.post-title',
   optTitleListSelector = '.titles',
-  optArticleTagsSelector = '.post-tags .list';
+  optArticleTagsSelector = '.post-tags .list',
+  articleTags = '.data-tags';
 
 function generateTitleLinks() {
 
@@ -65,7 +66,7 @@ function generateTitleLinks() {
   const articles = document.querySelectorAll(optArticleSelector);
   let html = '';
   for (let article of articles) {
-    article.querySelector(optArticleSelector); //tego nie miałam//
+    article.querySelector(optArticleSelector);
 
     /* [DONE] get the article id */
     const articleId = article.getAttribute('Id');
@@ -92,6 +93,3 @@ function generateTitleLinks() {
   }
 
 }
-
-generateTitleLinks();
-
