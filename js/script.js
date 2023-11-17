@@ -52,10 +52,10 @@ const titleClickHandler = function (event) {
 const optArticleSelector = '.post',
   optTitleSelector = '.post-title',
   optTitleListSelector = '.titles',
-  optArticleTagsSelector = '.post-tags .list',
-  articleTags = '.data-tags';
+  optArticleTagsSelector = '.post-tags .list';
 
-function generateTitleLinks() {
+function generateTitleLinks(customSelector = '') {
+  console.log(customSelector);
 
   /* [DONE] remove contents of titleList */
 
@@ -63,7 +63,7 @@ function generateTitleLinks() {
 
   /* [DONE] for each article */
 
-  const articles = document.querySelectorAll(optArticleSelector);
+  const articles = document.querySelectorAll(optArticleSelector + customSelector);
   let html = '';
   for (let article of articles) {
     article.querySelector(optArticleSelector);
@@ -106,44 +106,100 @@ function generateTags() {
   for (let article of articles) {
     article.querySelector(optArticleSelector);
 
-    /* find tags wrapper */
+    /* [DONE] find tags wrapper */
     const tagsWrapper = article.querySelector(optArticleTagsSelector);
     /* make html variable with empty string */
 
     let html = '';
 
-    /* get tags from data-tags attribute */
+    /* [DONE] get tags from data-tags attribute */
 
-    const tagSelector = article.getAttribute('data-tags');
-    console.log(tagSelector);
+    const articleTags = article.getAttribute('data-tags');
+    console.log(articleTags);
 
-    /* split tags into array */
+    /* [DONE] split tags into array */
     const articleTagsArray = articleTags.split(' ');
     console.log(articleTagsArray);
 
-    /* START LOOP: for each tag */
+    /* [DONE] START LOOP: for each tag */
 
     for (let tag of articleTagsArray) {
       console.log(tag);
 
-    /* generate HTML of the link */
+      /* [DONE] generate HTML of the link */
 
-conts linkHTML = '<li><a href="#tag-' + tag + '">' + articleTags + '</a></li>'
+      const linkHTML = '<li><a href="#tag-' + tag + '">' + tag + '</a></li>';
       console.log(linkHTML);
-      titleList.insertAdjacentHTML('beforeend', linkHTML);
+      tagsWrapper.insertAdjacentHTML('beforeend', linkHTML);
       html = html + linkHTML;
 
-      /* add generated code to html variable */
+      /* [DONE] add generated code to html variable */
 
-      /* END LOOP: for each tag */
+      /* [DONE] END LOOP: for each tag */
     }
 
-    /* insert HTML of all the links into the tags wrapper */
-titleList.innerHTML = html;
-const links = document.querySelectorAll('.titles a');
-  console.log(links);
-    /* END LOOP: for every article: */
+    /* [DONE] insert HTML of all the links into the tags wrapper */
+    tagsWrapper.innerHTML = html;
+    const links = document.querySelectorAll('.titles a');
+    console.log(links);
+    /* [DONE] END LOOP: for every article: */
   }
 }
 
 generateTags();
+
+function tagClickHandler(event) {
+
+  /* [DONE] prevent default action for this event */
+
+  event.preventDefault();
+
+  /* [DONE] make new constant named "clickedElement" and give it the value of "this" */
+
+  const clickedElement = this;
+
+  /* [IN PROGRESS] make a new constant "href" and read the attribute "href" of the clicked element */
+
+  const href = clickedElement.getAttribute('href');
+
+  /* [DONE] make a new constant "tag" and extract tag from the "href" constant */
+
+  const tag = href.replace('#tag-', '');
+
+  /* [DONE] find all tag links with class active */
+
+  const activeTagLinks = document.querySelectorAll('a.active[href^="#tag-"]');
+
+  /* [DONE] START LOOP: for each active tag link */
+  for (let activeTagLink of activeTagLinks) {
+    /* [DONE]remove class active */
+    activeTagLink.classList.remove('active');
+    /* [DONE] END LOOP: for each active tag link */
+
+  }
+  /* [DONE] find all tag links with "href" attribute equal to the "href" constant */
+  const tagLinks = document.querySelectorAll('a[href="' + href + '"]');
+  /* [DONE] START LOOP: for each found tag link */
+  for (let tagLink of tagLinks) {
+    /* [DONE] add class active */
+    tagLink.classList.add('active');
+    /* [DONE] END LOOP: for each found tag link */
+  }
+  /* [DONE] execute function "generateTitleLinks" with article selector as argument */
+  generateTitleLinks('[data-tags~="' + tag + '"]');
+}
+
+
+function addClickListenersToTags() {
+  /* find all links to tags */
+  const linksToTags = document.querySelectorAll('a[href^="#tag-"]');
+  console.log(linksToTags);
+  /* START LOOP: for each link */
+  for (let linksToTag of linksToTags) {
+    /* add tagClickHandler as event listener for that link */
+    linksToTag.addEventListener('click', tagClickHandler);
+    /* END LOOP: for each link */
+  }
+}
+
+addClickListenersToTags();
